@@ -1,0 +1,82 @@
+<?php use Phalcon\Tag as Tag; ?>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<div id="main">
+    <?= Tag::linkTo(
+        array('posts/index/', 'class' => 'ym-button ym-delete', 'text' => '<- Go back ')
+    ) ?>
+    <div class="ym-column linearize-level-1">
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <section class="box info">
+                    <h2><?= $post->title ?> created <?= $post->created ?> by <?= $post->getUsers()->login ?></h2>
+
+                    <p><?= $post->content ?></p>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="ym-column linearize-level-2" id="comments_container">
+        <h6>Comments:</h6>
+
+        </div>
+</div>
+<script>
+    // wait for the DOM to be loaded 
+    $(document).ready(function() {
+        $.get('/rest-api/api/comments/<?=$post->id?>').done(function(response) {
+            var data = JSON.parse(response);
+            if(data.status=="OK"){
+                data.comments.forEach(function(content){
+                    var comment = $("<p class=\"box warning\"></p>");
+                    comment.text(content);
+                    $("#comments_container").append(comment);
+                })
+            }
+        });
+        // bind 'myForm' and provide a simple callback function 
+        $('#comment').ajaxForm({ dataType:  'json', 
+            success:   function(response, c,xhr,form) {
+            if(response.status=="OK"){
+                var comment = $("<p class=\"box warning\"></p>");
+                comment.text(form.find("#content").val());
+                $("#comments_container").append(comment);
+            }
+            else{
+                $("#comment_error").text(response.messages)
+            }
+        }
+        });
+    });
+</script>
+<div>
+    <div class="ym-column linearize-level-1">
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <h6 class="ym-fbox-heading">Comment</h6>
+
+                <?php echo Tag::form(
+                    array(
+                        "rest-api/api/comments",
+                        "autocomplete" => "off",
+                        'class' => "ym-form linearize-form",
+                        'id'=>'comment',
+                        "method"=> "post"
+                    )
+                ) ?>
+                <div class="ym-fbox-text">
+                    <label for="content">Text</label>
+                    <?= Tag::textArea(array("content", 'cols' => "30", 'rows' => "7","id"=>'content')) ?>
+                    <div class="ym-fbox-text ym-error">
+                        <p id= "comment_error"class="ym-message"></p>
+                    </div>
+                </div>
+                <?= Tag::hiddenField(array("posts_id", "value"=> $post->id)) ?>
+
+                <div class="ym-fbox-button">
+                    <?php echo Tag::submitButton(array('Submit', 'class' => 'ym-button')) ?>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

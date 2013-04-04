@@ -1,0 +1,36 @@
+<?php use Phalcon\Tag as Tag ?>
+
+<?= $this->getContent() ?>
+
+<div id="main">
+    <div class="ym-column linearize-level-1">
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <h6 class="ym-fbox-heading">Log in</h6>
+
+                <?php echo Tag::form(
+                    array(
+                        'users/login',
+                        'class' => "ym-form linearize-form",
+                        'autocomplete' => 'off'
+                    )
+                ) ?>
+
+                <div class="ym-fbox-text">
+                    <label for="login">Username/Email</label>
+                    <?php echo Tag::textField(array('login', 'size' => "30")) ?>
+                </div>
+
+                <div class="ym-fbox-text">
+                    <label for="password">Password</label>
+                    <?php echo Tag::passwordField(array('password', 'size' => "30")) ?>
+                </div>
+
+                <div class="ym-fbox-button">
+                    <?php echo Tag::submitButton(array('Login', 'class' => 'ym-button')) ?>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

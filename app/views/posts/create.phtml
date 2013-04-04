@@ -1,0 +1,41 @@
+<?php use \Phalcon\Tag as Tag; ?>
+<?= $this->getContent() ?>
+<?php echo Tag::form(array("posts/create", "autocomplete" => "off")) ?>
+
+<div id="main">
+    <div class="ym-column linearize-level-1">
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <h6 class="ym-fbox-heading">Create a Post</h6>
+
+                <?php echo Tag::form(
+                    array(
+                        "posts/create",
+                        "autocomplete" => "off",
+                        'class' => "ym-form linearize-form"
+                    )
+                ) ?>
+
+
+                <div class="ym-fbox-text">
+                    <label for="title">Title</label>
+                    <?php echo Tag::textField(array('title', 'size' => "30")) ?>
+                </div>
+                <div class="ym-fbox-text">
+                    <label for="slug">Slug</label>
+                    <?php echo Tag::textField(array("slug", "size" => 30)) ?>
+                </div>
+                <div class="ym-fbox-text">
+                    <label for="content">Content</label>
+                    <?= Tag::textArea(array("content", 'cols' => "30", 'rows' => "7")) ?>
+                </div>
+
+
+                <div class="ym-fbox-button">
+                    <?php echo Tag::submitButton(array('Submit', 'class' => 'ym-button')) ?>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

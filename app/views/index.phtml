@@ -1,0 +1,61 @@
+<?php use Phalcon\Tag as Tag; ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Oroshnivskyy blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your invoices">
+    <meta name="author" content="Oleg Roshnivskyy">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <?= \Phalcon\Tag::javascriptInclude('js/domscript.js'); ?>
+    <?= \Phalcon\Tag::stylesheetLink('css/flexible-columns.css') ?>
+</head>
+<body>
+<div id="intro" role="contentinfo"> Phalcon blog, layout is based on YAML</div>
+
+<header>
+    <h1>Blog</h1>
+</header>
+<nav id="level2" role="navigation">
+    <div class="ym-wrapper">
+        <div class="ym-wbox">
+            <div class="ym-hlist">
+                <ul>
+                    <li>
+                        <?= Phalcon\Tag::linkTo('index', 'Home Page') ?>
+                    </li>
+                    <?php if ($this->session->has('auth')) { ?>
+                        <li>
+                            <?= Phalcon\Tag::linkTo('posts/index', '+Posts') ?>
+                        </li>
+                        <li>
+                            <?= Phalcon\Tag::linkTo('session/end', 'Log out') ?>
+                        </li>
+                    <?php } else { ?>
+                        <li>
+                            <?= Phalcon\Tag::linkTo('session/index', 'Log in') ?>
+                        </li>
+                        <li>
+                            <?= Phalcon\Tag::linkTo('session/register', 'Register') ?>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="ym-wbox">
+    <?php echo $this->getContent() ?>
+</div>
+<footer role="contentinfo">
+    <div class="ym-wrapper">
+        <div class="ym-wbox">
+            <p>© Company 2012 &ndash; Layout based on <a href="http://www.yaml.de">YAML</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

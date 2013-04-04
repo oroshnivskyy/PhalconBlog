@@ -1,0 +1,20 @@
+<?php use Phalcon\Tag as Tag; ?>
+<?php echo $this->getContent() ?>
+
+<div id="main">
+    <div class="ym-column linearize-level-1">
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <section class="box info">
+                    <h2><?= $post->title ?></h2>
+
+                    <p><?= mb_substr($post->content, 0, 200) ?>...</p>
+                    <?= Tag::linkTo(
+                        array('posts/show/' . $post->slug, 'class' => 'ym-button ym-next', 'text' => 'Read more'),
+                        'Read more'
+                    ) ?>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
